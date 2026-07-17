@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "Hatch"
+version = "1.0.0"
+id = "artifacts/forum-romanum"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19758
+
+[services.development]
+run = "pnpm --filter @workspace/forum-romanum run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/forum-romanum", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/forum-romanum/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19758"
+BASE_PATH = "/"
